@@ -2,36 +2,35 @@
 import {StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity} from "react-native";
 
 export default function App() {
-    return (
-        <View style={styles.container}>
-            
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Email"
-                    placeholderTextColor="#003f5c"
-                />
-            </View>
+  return (
+    <View style={styles.container}>       
+      <View style={styles.inputView}>
+        <TextInput
+            style={styles.TextInput}
+              placeholder="Email"
+              placeholderTextColor="#003f5c"
+          />
+      </View>
 
-            <View style={styles.inputView}>
-                <TextInput 
-                    style={styles.TextInput} 
-                    placeholder="Password" 
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                />
-            </View>
+      <View style={styles.inputView}>
+          <TextInput 
+            style={styles.TextInput} 
+            placeholder="Password" 
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+          />
+      </View>
 
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
-            </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={styles.forgot_button}>Forgot Password?</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn}>
-                <Text style={styles.loginText}>LOGIN</Text>
-            </TouchableOpacity>
+      <TouchableOpacity style={styles.loginBtn}>
+        <Text style={styles.loginText}>LOGIN</Text>
+      </TouchableOpacity>
 
-        </View>
-    );
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
