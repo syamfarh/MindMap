@@ -1,7 +1,7 @@
 #MindMap
 
 ## Account Features
-| Registration page | Login page |
+| <mark>Registration page</mark> | Login page |
 | ----------------- | ---------- |
 | Signup page utilising Google Firebase to Register users. | Login page that utilises Google Firebase to Authenticate users Credentials. |
 
