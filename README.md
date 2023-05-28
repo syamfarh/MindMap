@@ -1,4 +1,4 @@
-#MindMap
+# MindMap
 
 ## Account Features
 | Registration page | Login page |
