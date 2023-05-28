@@ -1,4 +1,4 @@
-# <span style="color: blue;">MindMap</span>
+# MindMap
 
 ## Account Features
 | Registration page | Login page |
