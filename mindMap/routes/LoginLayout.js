@@ -1,7 +1,35 @@
 //import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity} from "react-native";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import React, {useEffect, FC, ReactElement, useState } from "react";
+import { auth } from "../firebase";
+import { useNavigation } from '@react-navigation/core';
 
-export default function App() {
+
+export default function App({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = () => {
+  signInWithEmailAndPassword(auth, email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log(user.email);
+      })
+      .catch(error => console.log(error.message))
+    }
+ 
+
+
+  useEffect(() => {
+    const unsubsribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.navigate("JournalEntry")
+      }
+    })
+    return unsubsribe
+  }, [])
+
   return (
     <View style={styles.container}>       
       <View style={styles.inputView}>
@@ -9,6 +37,7 @@ export default function App() {
             style={styles.TextInput}
               placeholder="Email"
               placeholderTextColor="#003f5c"
+              onChangeText={text => setEmail(text)}
           />
       </View>
 
@@ -17,15 +46,12 @@ export default function App() {
             style={styles.TextInput} 
             placeholder="Password" 
             placeholderTextColor="#003f5c"
+            onChangeText={text => setPassword(text)}
             secureTextEntry={true}
           />
       </View>
 
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity style={styles.loginBtn} onPress={handleSignIn}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
 

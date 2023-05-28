@@ -1,33 +1,44 @@
-//import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { Text, TouchableOpacity, StyleSheet, TextInput, View, Touchable } from "react-native";
+import {createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigation } from '@react-navigation/core';
 
-export default function App() {
-  return (
+
+export default function App({navigation}) {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [conPass, setconPass] = useState('');
+
+  const handleSignUp = () => {
+    if (conPass !== password) {
+        alert("password not the same");
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log(user.email);
+      })
+      .catch(error => console.log(error.message))
+    }
+  }
+
+  const pressed = () => {
+      navigation.navigate("Login");
+    }
+  
+    return (
     <View>
       
-      <Text >Create Account</Text>
-
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder={"Your Username"}
-          autoCapitalize={"none"}
-        />
-      </View>
+      <Text style={styles.top}>Create Account</Text>
 
       <View>
         <TextInput
           style={styles.input}
           placeholder={"Your Email Address"}
           autoCapitalize={"none"}
-        />
-      </View>
-
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder={"Phone Number"}
-          autoCapitalize={"none"}
+          onChangeText={text => setEmail(text)}
         />
       </View>
 
@@ -35,6 +46,7 @@ export default function App() {
         <TextInput
           style={styles.input}
           placeholder={"Enter Password"}
+          onChangeText={text => setPassword(text)}
           secureTextEntry
         />
       </View>
@@ -43,13 +55,20 @@ export default function App() {
         <TextInput
           style={styles.input}
           placeholder={"Confirm Password"}
+          onChangeText={text => setconPass(text)}
           secureTextEntry
         />
       </View>
 
       <View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text> Sign up</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+        <TouchableOpacity style={styles.button} onPress={pressed}>
+          <Text> Sign in</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -57,6 +76,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+
+  top: {
+    marginTop:200,
+  },
+
   input: {
     height: 40,
     marginBottom: 10,
@@ -68,7 +92,9 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "70%",
     borderRadius: 5,
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 1,
+
 },
 
 });

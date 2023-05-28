@@ -30,9 +30,12 @@ export default function App() {
             <Button title="Save Entry" onPress={handleSaveEntry} />
           </View>
         ) : (
-          <TouchableOpacity style={styles.button} onPress={handleOpenEntryScreen}>
-            <Text style={styles.buttonText}>+</Text>
-          </TouchableOpacity>
+          <View> 
+            <TouchableOpacity style={styles.button} onPress={handleOpenEntryScreen}>
+              <Text style={styles.buttonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+          
         )}
       </View>
     );
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#246AA9',
         position: 'absolute',
         bottom: 30,
-        left: 110,
+        left: 300,
         right: 0,
     },
     buttonText: {
