@@ -15,6 +15,7 @@
 - Utilises a streak achievement feature to encourage sustained progress.
 
 ### **2. Personal Journal**
+- (under development)
 - A simple but effective journal tab that allows the user to type out their feelings and thoughts that is bookmarked and stored by day.
 - Can be accessed via the calender as well.
 
