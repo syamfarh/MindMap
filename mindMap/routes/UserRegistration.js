@@ -2,7 +2,6 @@ import React, { FC, ReactElement, useState } from "react";
 import { Text, TouchableOpacity, StyleSheet, TextInput, View, Touchable } from "react-native";
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigation } from '@react-navigation/core';
 
 
 export default function App({navigation}) {
@@ -25,9 +24,6 @@ export default function App({navigation}) {
     }
   }
 
-  const pressed = () => {
-      navigation.navigate("Login");
-    }
   
     return (
     <View>
@@ -67,11 +63,6 @@ export default function App({navigation}) {
         </TouchableOpacity>
       </View>
 
-      <View>
-        <TouchableOpacity style={styles.button} onPress={pressed}>
-          <Text> Sign in</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -91,9 +82,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#246AA9",
     padding: 10,
-    width: "70%",
+    width: 100,
+    height: 40,
     borderRadius: 5,
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 1,
 
 },
