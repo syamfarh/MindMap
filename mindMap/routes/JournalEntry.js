@@ -1,43 +1,25 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-    const [entryText, setEntryText] = useState('');
-    const [showEntryScreen, setShowEntryScreen] = useState(false);
-  
-    const handleSaveEntry = () => {
-      // Handle saving the journal entry
-      console.log('Saving entry:', entryText);
-      // Add your logic here to save the journal entry to a database or perform any other actions
-      setShowEntryScreen(false); // Close the entry screen after saving
-    };
-  
-    const handleOpenEntryScreen = () => {
-      setShowEntryScreen(true); // Open the entry screen
-    };
-  
+    //not completed
     return (
-      <View style={styles.container}>
-        {showEntryScreen ? (
-          <View style={styles.entryScreenContainer}>
-            <TextInput
-              style={styles.input}
-              multiline
-              placeholder="Write your journal entry here"
-              value={entryText}
-              onChangeText={setEntryText}
-            />
-            <Button title="Save Entry" onPress={handleSaveEntry} />
-          </View>
-        ) : (
+        <NavigationContainer independent={true}>
+          <Stack.Navigator screenOptions={{
+          headerShown: false
+          }}>
+
+          </Stack.Navigator>
           <View> 
-            <TouchableOpacity style={styles.button} onPress={handleOpenEntryScreen}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
           </View>
-          
-        )}
-      </View>
+        </NavigationContainer>
     );
   };
 
@@ -46,8 +28,6 @@ const styles = StyleSheet.create({
       flex: 1,
       padding: 16,
       alignItems: 'flex-end',
-      //justifyContent: 'center',
-      
     },
     entryScreenContainer: {
       flex: 1,
@@ -70,11 +50,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         backgroundColor: '#246AA9',
         position: 'absolute',
-        bottom: 30,
-        left: 300,
-        right: 0,
-    },
-    buttonText: {
-
+        right:50,
+        top:700
     },
   });
