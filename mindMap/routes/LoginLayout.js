@@ -24,7 +24,7 @@ export default function App({navigation}) {
   useEffect(() => {
     const unsubsribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("JournalEntry")
+        navigation.navigate("Journal")
       }
     })
     return unsubsribe

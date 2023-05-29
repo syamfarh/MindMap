@@ -18,6 +18,7 @@ export default function App({navigation}) {
       createUserWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        alert("successful");
         console.log(user.email);
       })
       .catch(error => console.log(error.message))

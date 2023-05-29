@@ -5,6 +5,7 @@ import UserRegistration from './routes/UserRegistration';
 import JournalEntry from './routes/JournalEntry';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Journal from './routes/Journal';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,9 +15,9 @@ export default function App() {
       <Stack.Navigator screenOptions={{
     headerShown: false
   }}>
-      <Stack.Screen name="Registration" component={UserRegistration} />
-      <Stack.Screen name="Login" component={LoginLayout} />
-      <Stack.Screen name="JournalEntry" component={JournalEntry} />
+    <Stack.Screen name="Registration" component={UserRegistration} />
+    <Stack.Screen name="Login" component={LoginLayout} />
+    <Stack.Screen name="Journal" component={Journal} />
       </Stack.Navigator>
     </NavigationContainer>
   );
