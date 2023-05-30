@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import LoginLayout from './routes/LoginLayout';
 import UserRegistration from './routes/UserRegistration';
-import JournalEntry from './routes/JournalEntry';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Journal from './routes/Journal';
@@ -20,6 +19,7 @@ export default function App() {
     <Stack.Screen name="Registration" component={UserRegistration} />
     <Stack.Screen name="Login" component={LoginLayout} />
     <Stack.Screen name="Journal" component={Journal} />
+    
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,8 +3,6 @@ import {StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity} from
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useEffect, FC, ReactElement, useState } from "react";
 import { auth } from "../firebase";
-import { useNavigation } from '@react-navigation/core';
-
 
 export default function App({navigation}) {
   const [email, setEmail] = useState('');
@@ -16,17 +14,26 @@ export default function App({navigation}) {
         const user = userCredentials.user;
         console.log(user.email);
       })
-      .catch(error => console.log(error.message))
+      .catch(error => {
+        console.log(error.message);
+        window.alert("Invalid password. Try again");})
     }
  
   useEffect(() => {
     const unsubsribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("Journal")
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Journal'}],
+        });
       }
     })
     return unsubsribe
   }, [])
+
+  const pressedReg = () => {
+    navigation.navigate("Registration");
+  }
 
   return (
     <View > 
@@ -50,6 +57,10 @@ export default function App({navigation}) {
       <TouchableOpacity style={styles.loginBtn} onPress={handleSignIn}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
+
+      <Text style={styles.regNow}>Don't have an account? 
+        <Text style={styles.regLink}  onPress={pressedReg}> Register Now</Text>
+      </Text>
     </View>
   );
 }
@@ -115,34 +126,17 @@ const styles = StyleSheet.create({
       verticalAlign: 'middle',
     },
 
-    container: {
-      flex: 1, 
-      backgroundColor: "#fff", 
-      alignItems: "center", 
-      justifyContent: "center", 
+    regNow: {
+      position: 'absolute',
+      width: 253,
+      height: 21,
+      left: 70,
+      top: 520
     },
   
-    image: {  
-      marginBottom: 40,
-    },
-  
-    inputView: { 
-      backgroundColor: "#43A0F3",
-      borderRadius: 30,
-      width: 200,
-      height: 45,
-      marginBottom: 20,
-      alignItems: "stretch",
-    },
-  
-    
-  
-    forgot_button: {
-      height: 30,
-      marginBottom: 30,
-    },
-  
-
+    regLink: {
+      color: '#35C2C1',
+    }
   
   });
   

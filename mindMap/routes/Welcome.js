@@ -106,5 +106,4 @@ const styles = StyleSheet.create({
         verticalAlign: 'middle',
     },
 
-
   });

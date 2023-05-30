@@ -24,16 +24,21 @@ export default function App({navigation}) {
     }
   }
 
+  const pressedLogin = () => {
+    navigation.navigate("Login");
+  }
   
     return (
     <View>
       
-      <Text style={styles.top}>Create Account</Text>
+      <Text style={styles.welcomeText}>
+        Hello! Register to get started
+      </Text>
 
       <View>
         <TextInput
-          style={styles.input}
-          placeholder={"Your Email Address"}
+          style={styles.emailInput}
+          placeholder={"Email"}
           autoCapitalize={"none"}
           onChangeText={text => setEmail(text)}
         />
@@ -41,7 +46,7 @@ export default function App({navigation}) {
 
       <View>
         <TextInput
-          style={styles.input}
+          style={styles.passwordInput}
           placeholder={"Enter Password"}
           onChangeText={text => setPassword(text)}
           secureTextEntry
@@ -50,7 +55,7 @@ export default function App({navigation}) {
 
       <View>
         <TextInput
-          style={styles.input}
+          style={styles.confirmInput}
           placeholder={"Confirm Password"}
           onChangeText={text => setconPass(text)}
           secureTextEntry
@@ -58,37 +63,104 @@ export default function App({navigation}) {
       </View>
 
       <View>
-        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-          <Text> Sign up</Text>
+        <TouchableOpacity style={styles.registerButton} onPress={handleSignUp}>
+          <Text style={styles.regText}>Register</Text>
         </TouchableOpacity>
       </View>
 
+      <Text style={styles.loginNow}>Already have an account? 
+        <Text style={styles.loginLink}  onPress={pressedLogin}> Login now</Text>
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
 
-  top: {
-    marginTop:200,
+  welcomeText: {
+    position: 'absolute',
+    width: 280,
+    height: 78,
+    left: 22,
+    top: 125,
+    fontWeight: 700,
+    fontSize: 30,
   },
 
-  input: {
-    height: 40,
-    marginBottom: 10,
-    backgroundColor: "#fff",
+  emailInput: {
+    position: 'absolute',
+    width: 331,
+    height: 56,
+    left: 22,
+    top: 235,
+    borderRadius: 8,
+    borderColor: '#1E232C',
+    borderWidth: 1,
+    backgroundColor: '#F7F8F9',
+    borderColor: '#E8ECF4',
+    padding:20,
   },
 
-  button: {
-    backgroundColor: "#246AA9",
-    padding: 10,
-    width: 100,
-    height: 40,
-    borderRadius: 5,
+  passwordInput: {
+    position: 'absolute',
+    width: 331,
+    height: 56,
+    left: 22,
+    top: 303,
+    borderRadius: 8,
+    borderColor: '#1E232C',
+    borderWidth: 1,
+    backgroundColor: '#F7F8F9',
+    borderColor: '#E8ECF4',
+    padding:20,
+  },
+
+  confirmInput: {
+    position: 'absolute',
+    width: 331,
+    height: 56,
+    left: 22,
+    top: 371,
+    borderRadius: 8,
+    borderColor: '#1E232C',
+    borderWidth: 1,
+    backgroundColor: '#F7F8F9',
+    borderColor: '#E8ECF4',
+    padding:20,
+  },
+
+  registerButton: {
+    position: 'absolute',
+    width: 331,
+    height: 56,
+    left: 22,
+    top: 439,
+    backgroundColor: '#1E232C',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 1,
-
+    borderRadius: 8,
 },
+  regText: {
+    position: 'absolute',
+    width: "100%",
+    height: 20,
+    top: 18,
+    color: '#FFFFFF',
+    fontSize: 15,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+},
+
+  loginNow: {
+    position: 'absolute',
+    width: 253,
+    height: 21,
+    left: 70,
+    top: 520
+  },
+
+  loginLink: {
+    color: '#35C2C1',
+  }
 
 });
