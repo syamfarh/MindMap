@@ -19,8 +19,6 @@ export default function App({navigation}) {
       .catch(error => console.log(error.message))
     }
  
-
-
   useEffect(() => {
     const unsubsribe = auth.onAuthStateChanged(user => {
       if (user) {
@@ -31,35 +29,92 @@ export default function App({navigation}) {
   }, [])
 
   return (
-    <View style={styles.container}>       
-      <View style={styles.inputView}>
-        <TextInput
-            style={styles.TextInput}
-              placeholder="Email"
-              placeholderTextColor="#003f5c"
-              onChangeText={text => setEmail(text)}
-          />
-      </View>
-
-      <View style={styles.inputView}>
-          <TextInput 
-            style={styles.TextInput} 
+    <View > 
+      <Text style={styles.welcomeText}>
+        Welcome back! Glad to see you again!
+      </Text>
+      <TextInput
+        style={styles.emailInput}
+        placeholder="Enter your email"
+        placeholderTextColor="#003f5c"
+        onChangeText={text => setEmail(text)}
+      />
+      <TextInput 
+            style={styles.passwordInput} 
             placeholder="Password" 
             placeholderTextColor="#003f5c"
             onChangeText={text => setPassword(text)}
             secureTextEntry={true}
           />
-      </View>
-
+      
       <TouchableOpacity style={styles.loginBtn} onPress={handleSignIn}>
-        <Text style={styles.loginText}>LOGIN</Text>
+        <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+    welcomeText: {
+      position: 'absolute',
+      width: 280,
+      height: 78,
+      left: 22,
+      top: 125,
+      fontWeight: 700,
+      fontSize: 30,
+    },
+
+    emailInput: {
+      position: 'absolute',
+      width: 331,
+      height: 56,
+      left: 22,
+      top: 235,
+      borderRadius: 8,
+      borderColor: '#1E232C',
+      borderWidth: 1,
+      backgroundColor: '#F7F8F9',
+      borderColor: '#E8ECF4',
+      padding:20,
+    },
+
+    passwordInput: {
+      position: 'absolute',
+      width: 331,
+      height: 56,
+      left: 22,
+      top: 306,
+      borderRadius: 8,
+      borderWidth: 1,
+      backgroundColor: '#F7F8F9',
+      borderColor: '#E8ECF4',
+      padding:20,
+    },
+
+    loginBtn: { 
+      position: 'absolute',
+      width: 331,
+      height: 56,
+      left: 22,
+      top: 424,
+      backgroundColor: '#1E232C',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 8,
+    },
+
+    loginText: {
+      position: 'absolute',
+      width: "100%",
+      height: 20,
+      top: 18,
+      color: '#FFFFFF',
+      fontSize: 15,
+      textAlign: 'center',
+      verticalAlign: 'middle',
+    },
+
     container: {
       flex: 1, 
       backgroundColor: "#fff", 
@@ -80,27 +135,14 @@ const styles = StyleSheet.create({
       alignItems: "stretch",
     },
   
-    TextInput: {
-      height: 50,
-      flex: 1,
-      padding: 10,
-      marginLeft: 20,
-    },
+    
   
     forgot_button: {
       height: 30,
       marginBottom: 30,
     },
   
-    loginBtn: { 
-      width: 50, 
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 40,
-      backgroundColor: "#246AA9", 
-    },
+
   
   });
   
