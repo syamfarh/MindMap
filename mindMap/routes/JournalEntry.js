@@ -1,33 +1,69 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, SafeAreaView } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import Journal from './Journal';
+import Entypo from 'react-native-vector-icons/Entypo'
 
-const Stack = createNativeStackNavigator();
+export default function App({ navigation }) {
+  const [journals, setjournals] = useState([]); 
+  
+  const addNewJournal= () => {
+    console.log("press");
+    navigation.getParent().navigate("Journal");
+    setjournals([...journals,1]);
+  }
 
-export default function App() {
-    //not completed
+  const renderButton = () => {
+    return(
+      <View style={styles.container}>
+        <Entypo name="book" size={15}></Entypo>
+        <TouchableOpacity>
+          <Text style={styles.eachJournal}> New Journal </Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Entypo name="dots-three-vertical" size={15}></Entypo>
+        </TouchableOpacity>
+        
+      </View>
+    );
+
+  }
     return (
-        <NavigationContainer independent={true}>
-          <Stack.Navigator screenOptions={{
-          headerShown: false
-          }}>
-
-          </Stack.Navigator>
-          <View> 
-            <TouchableOpacity style={styles.button}>
+          <View >
+            <SafeAreaView style={styles.flat}>
+              <FlatList 
+                data={journals}
+                renderItem={renderButton}
+              />
+            </SafeAreaView>
+            <TouchableOpacity style={styles.button} onPress={addNewJournal}>
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
           </View>
-        </NavigationContainer>
     );
   };
 
 const styles = StyleSheet.create({
+
     container: {
-      flex: 1,
-      padding: 16,
-      alignItems: 'flex-end',
+      flexDirection: "row",
+      alignItems: 'center',
+      flex:1,
+    },
+
+    flat: {
+      justifyContent: 'center',
+      padding: 20,
+      marginTop:80,
+    },
+
+    eachJournal: {
+      padding:10,
+      borderWidth: 0,
+      flex:1,
+      height:60,
+      top: 10,
+      width:330,
     },
     entryScreenContainer: {
       flex: 1,
@@ -42,8 +78,8 @@ const styles = StyleSheet.create({
       alignItems: 'flex-end',
     },
     button: {
-        width: 75,
-        height: 75,
+        width: 70,
+        height: 70,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
@@ -53,4 +89,10 @@ const styles = StyleSheet.create({
         right:50,
         top:700
     },
+
+    buttonText: {
+      bottom:3,
+      fontSize:40,
+      fontWeight:300,
+    }
   });

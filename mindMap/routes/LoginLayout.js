@@ -1,4 +1,3 @@
-//import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity} from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useEffect, FC, ReactElement, useState } from "react";
