@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, SafeAreaView } from 'react-native';
+import {Alert, View, TextInput, Button, StyleSheet, TouchableOpacity, Text, SafeAreaView, Modal} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { onSnapshot } from 'firebase/firestore';
-import { getDiariesQueue } from '../helper';
+import { getJournalQueue, deleteJournal} from '../helper';
 
 export default function App({ navigation }) {
   const [journals, setjournals] = useState([]); 
+  const [visible, setVisible] = useState(false);
   
   const addNewJournal= () => {
     navigation.getParent().navigate("Journal");
-    //setjournals([...journals,1]);
   }
 
   const renderButton = (q) => {
+
     return(
       <View style={styles.container}>
         <Entypo name="book" size={15}></Entypo>
@@ -21,14 +22,34 @@ export default function App({ navigation }) {
           <Text style={styles.eachJournal}> {q.item.name} </Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Entypo name="dots-three-vertical" size={15}></Entypo>
+          <Entypo name="circle-with-cross" size={20} onPress={() => deleteCross(q.item.itemID)}></Entypo>
         </TouchableOpacity>
       </View>
     );
   }
 
+  deleteCross = (q) => {
+    Alert.alert('Delete?', 'Press confirm to delete',[
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'DELETE', onPress: () => pressDeleteJournal(q)},
+    ]);
+  }
+
+  async function pressDeleteJournal(q) {
+		try {
+			await deleteJournal(q);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+
   useEffect(() => {
-    let q = getDiariesQueue();
+    let q = getJournalQueue();
     const unsubscribe = onSnapshot(
 			q,
 			(querySnapshot) => {
@@ -37,7 +58,7 @@ export default function App({ navigation }) {
 				} else {
 					const newdiaries = [];
 					querySnapshot.docs.forEach((doc) => {
-						newdiaries.push({ ...doc.data()});
+						newdiaries.push({ ...doc.data(),itemID: doc.id});
 						});
 						setjournals(newdiaries);
 					}
@@ -56,7 +77,7 @@ export default function App({ navigation }) {
             <SafeAreaView style={styles.flat}>
               <FlatList 
                 data={journals}
-                keyExtractor={(item) => item.index}
+                keyExtractor={(item) => item.itemID}
                 renderItem={renderButton}
               />
             </SafeAreaView>

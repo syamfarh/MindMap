@@ -28,7 +28,16 @@ export async function createJournal(entry) {
 	console.log("entry written with ID: ", docRef.id);
 }
 
-export function getDiariesQueue() {
+export async function deleteJournal(id) {
+	try {
+		await deleteDoc(doc(firestore, "entry", id));
+		console.log("Document deleted with ID: ", id);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export function getJournalQueue() {
 	const q = query(
 		collection(firestore, "entry"),
 		where("userId", "==", auth.currentUser.uid),
