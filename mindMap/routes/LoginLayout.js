@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity} from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useEffect, FC, ReactElement, useState } from "react";
-import { auth } from "../firebase";
+import { auth } from "../firebase-setup";
 
 export default function App({navigation}) {
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export default function App({navigation}) {
       if (user) {
         navigation.reset({
           index: 0,
-          routes: [{name: 'Journal'}],
+          routes: [{name: 'Home'}],
         });
       }
     })

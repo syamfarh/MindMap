@@ -13,7 +13,7 @@ export default function App({ navigation }) {
     return(
         <Tab.Navigator>
             <Tab.Screen name="Journal" component={JournalEntry}/>
-            <Tab.Screen name="Journals" component={Journal} />
+            
         </Tab.Navigator>
     )
 }

@@ -1,38 +1,62 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import Journal from './Journal';
-import Entypo from 'react-native-vector-icons/Entypo'
+import Entypo from 'react-native-vector-icons/Entypo';
+import { onSnapshot } from 'firebase/firestore';
+import { getDiariesQueue } from '../helper';
 
 export default function App({ navigation }) {
   const [journals, setjournals] = useState([]); 
   
   const addNewJournal= () => {
-    console.log("press");
     navigation.getParent().navigate("Journal");
-    setjournals([...journals,1]);
+    //setjournals([...journals,1]);
   }
 
-  const renderButton = () => {
+  const renderButton = (q) => {
     return(
       <View style={styles.container}>
         <Entypo name="book" size={15}></Entypo>
         <TouchableOpacity>
-          <Text style={styles.eachJournal}> New Journal </Text>
+          <Text style={styles.eachJournal}> {q.item.name} </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Entypo name="dots-three-vertical" size={15}></Entypo>
         </TouchableOpacity>
-        
       </View>
     );
-
   }
+
+  useEffect(() => {
+    let q = getDiariesQueue();
+    const unsubscribe = onSnapshot(
+			q,
+			(querySnapshot) => {
+				if (querySnapshot.empty) {
+					setjournals([]);  
+				} else {
+					const newdiaries = [];
+					querySnapshot.docs.forEach((doc) => {
+						newdiaries.push({ ...doc.data()});
+						});
+						setjournals(newdiaries);
+					}
+				},
+			(err) => {
+				console.log(err);
+			}
+		);
+		return () => {
+			unsubscribe();
+		};
+  },[])
+
     return (
           <View >
             <SafeAreaView style={styles.flat}>
               <FlatList 
                 data={journals}
+                keyExtractor={(item) => item.index}
                 renderItem={renderButton}
               />
             </SafeAreaView>

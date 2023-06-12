@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useState } from "react";
 import { Text, TouchableOpacity, StyleSheet, TextInput, View, Touchable } from "react-native";
 import {createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../firebase-setup";
 
 
 export default function App({navigation}) {
