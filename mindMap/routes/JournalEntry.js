@@ -10,16 +10,19 @@ export default function App({ navigation }) {
   const [visible, setVisible] = useState(false);
   
   const addNewJournal= () => {
-    navigation.getParent().navigate("Journal");
+    navigation.getParent().navigate("Journal", {item: {}});
+  }
+
+  const editNewJournal= (q) => {
+    navigation.getParent().navigate("Journal", {item: q.item});
   }
 
   const renderButton = (q) => {
-
     return(
       <View style={styles.container}>
         <Entypo name="book" size={15}></Entypo>
         <TouchableOpacity>
-          <Text style={styles.eachJournal}> {q.item.name} </Text>
+          <Text style={styles.eachJournal} onPress={() => editNewJournal(q)}> {q.item.name} </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Entypo name="circle-with-cross" size={20} onPress={() => deleteCross(q.item.itemID)}></Entypo>

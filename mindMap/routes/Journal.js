@@ -1,19 +1,22 @@
 import Entypo from 'react-native-vector-icons/Entypo'
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, BackHandler, Alert } from 'react-native';
-import { createJournal } from '../helper';
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
+import { createJournal, editJournal } from '../helper';
 import { auth } from "../firebase-setup";
 
-export default function App({ navigation }) {
+export default function App({ route, navigation }) {
+    const { item } = route.params;
     const [diary, setDiary] = useState("");
     const [name, setName] = useState("New Document");
     const [change, setChange] = useState(true);
+    const [edited, setEdited] = useState(false);
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
     var hours = new Date().getHours(); //Current Hours
     var min = new Date().getMinutes(); //Current Minutes
     const [currentDate, setCurrentDate] = useState(date + '/' + month + '/' + year + ' ' + hours + ':' + min);
+
 
     const pressedBack = () => {
         setChange(false);
@@ -22,6 +25,7 @@ export default function App({ navigation }) {
         console.log(auth.currentUser.uid);
         console.log(change);
     }
+
     const createDia = () => {
         createJournal({
             name: name,
@@ -31,13 +35,40 @@ export default function App({ navigation }) {
         });
     }
 
+    const editDia = () => {
+      editJournal(item.itemID,
+        {
+          name: name,
+          description: diary,
+          date: currentDate,
+          userId: auth.currentUser.uid
+        }
+      )
+
+    }
+
+    useEffect( 
+      () => {
+        if (Object.keys(item).length) {
+          setDiary(item.description);
+          setName(item.name);
+          setEdited(true);
+        };
+      },[]
+    )
+
+
     useEffect(
       () =>
         navigation.addListener('beforeRemove', (e) => {
-          console.log(change);
           if (!change) {
-            // If we don't have unsaved changes, then we don't need to do anything
-            createDia();
+            if (!edited) {
+              console.log("creating...");
+              createDia();
+            } else {
+              console.log("editing...");
+              editDia();
+            };
             return;
           }
   
@@ -69,14 +100,16 @@ export default function App({ navigation }) {
                 <TouchableOpacity onPress={pressedBack}>
                     <Entypo name="save" size={30}></Entypo>
                 </TouchableOpacity>
-                <TextInput style={styles.docHeader} defaultValue='New Document' maxLength={20} caretHidden = {true} 
+                <TextInput style={styles.docHeader} defaultValue={name} maxLength={20} caretHidden = {true} 
                 onChangeText={setName}></TextInput>
                 <Entypo name="menu" size={30}></Entypo>
             </View> 
             <View>
                 <Text style={styles.dateStyle}>{currentDate}</Text>
             </View>
-            <TextInput style={styles.textInput} multiline={true} onChangeText={text => {setDiary(text);if(!change)setChange(true)}}></TextInput>
+            <TextInput style={styles.textInput} multiline={true} defaultValue={diary} 
+            onChangeText={text => {setDiary(text);if(!change)setChange(true)}}>
+            </TextInput>
         </View>
     );
 };

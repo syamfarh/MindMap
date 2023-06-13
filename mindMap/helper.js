@@ -37,10 +37,21 @@ export async function deleteJournal(id) {
 	}
 }
 
+export async function editJournal(id, updateField) {
+	try {
+		const docRef = doc(firestore, "entry", id);
+		await updateDoc(docRef, updateField);
+		console.log("Document updated with ID: ", id);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 export function getJournalQueue() {
 	const q = query(
 		collection(firestore, "entry"),
 		where("userId", "==", auth.currentUser.uid),
+		orderBy("date","desc"),
 	);
 	return q;
 }
