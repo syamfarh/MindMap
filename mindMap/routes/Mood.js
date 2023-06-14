@@ -6,9 +6,10 @@ import { auth } from "../firebase-setup";
 import { onSnapshot } from 'firebase/firestore';
 
 export default function App({ navigation }) {
-    
+
     const [selected, setSelected] = useState('');
-    const [moodList, setMoodLists] = useState([]); 
+    const [moodList, setMoodLists] = useState({}); 
+    const [filteredList, setfilteredList] = useState([]);
     var date = new Date().getDate().toString(); //Current Date
     var month = (new Date().getMonth() + 1).toString(); //Current Month
     var year = new Date().getFullYear().toString(); //Current Year
@@ -45,13 +46,17 @@ export default function App({ navigation }) {
                                 setIsVisible(false);
                             };
                             });
-                            setMoodLists(newMoods);
+                            var exist = {};
+                            newMoods.map((a) => exist[a.date] = a.mood);
+                            setMoodLists(exist);
+                            
                         }
                     },
                 (err) => {
                     console.log(err);
                 }
             );
+            
             return () => {
                 unsubscribe();
             };
@@ -77,6 +82,29 @@ export default function App({ navigation }) {
         <View>
             <Calendar style= {styles.calendarStyle} onDayPress={day => { setSelected(day.dateString);}}
                     markingType="custom"
+                    dayComponent={({date, state}) => {
+                        return (
+                            (moodList.hasOwnProperty(date.dateString)) ? 
+                                (moodList[date.dateString] === 'sad') ? (
+                                    <View>
+                                        <Image source={require('../assets/sad.png')} style={styles.dayStyle}/>  
+                                    </View>
+                                ):
+                                (moodList[date.dateString] === 'happy' ? (
+                                    <View>
+                                        <Image source={require('../assets/laughing-emoji.png')} style={styles.dayStyle}/>  
+                                    </View>
+                                ):
+                                ( 
+                                    <View>
+                                        <Image source={require('../assets/angry.png')} style={styles.dayStyle}/>  
+                                    </View>
+                                )
+                            ):
+                            (<Text>{date.day}</Text>)
+                        );
+                    }}
+                        
             />
         </View>
     );
@@ -110,11 +138,12 @@ const styles = StyleSheet.create({
 
     calendarStyle: {
         top: 100,
-        height: 350,
+        height: 300,
+        borderRadius: 50
     },
 
     dayStyle: {
-        height: 50,
-        width: 50,
+        height: 20,
+        width: 20,
     }
 });
