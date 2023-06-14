@@ -55,3 +55,22 @@ export function getJournalQueue() {
 	);
 	return q;
 }
+
+export async function createMood(tdy) {
+	const docRef = await addDoc(collection(firestore, "mood"), {
+		mood: tdy.mood,
+		date: tdy.date,
+        userId: tdy.userId,
+	});
+
+	console.log("mood written with ID: ", docRef.id);
+}
+
+export function getMoodQueue() {
+	const q = query(
+		collection(firestore, "mood"),
+		where("userId", "==", auth.currentUser.uid),
+		orderBy("date","desc"),
+	);
+	return q;
+}
