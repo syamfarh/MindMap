@@ -5,7 +5,7 @@ import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'rea
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import JournalEntry from './JournalEntry';
-import Journal from './Journal';
+import Mood from './Mood';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -13,7 +13,7 @@ export default function App({ navigation }) {
     return(
         <Tab.Navigator>
             <Tab.Screen name="Journal" component={JournalEntry}/>
-            
+            <Tab.Screen name="Mood" component={Mood}/>
         </Tab.Navigator>
     )
 }
