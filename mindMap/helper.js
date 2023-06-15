@@ -74,3 +74,32 @@ export function getMoodQueue() {
 	);
 	return q;
 }
+
+export async function createMoodDatabase(tdy) {
+	const docRef = await addDoc(collection(firestore, "moodDatabase"), {
+		happy: tdy.happy,
+		sad: tdy.sad,
+		angry: tdy.angry,
+        userId: tdy.userId,
+	});
+
+	console.log("moodDatabase written with ID: ", docRef.id);
+}
+
+export async function editMoodDatabase(id, updateField) {
+	try {
+		const docRef = doc(firestore, "moodDatabase", id);
+		await updateDoc(docRef, updateField);
+		console.log("MoodDatabase updated with ID: ", id);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export function getMoodDatabase() {
+	const q = query(
+		collection(firestore, "moodDatabase"),
+		where("userId", "==", auth.currentUser.uid),
+	);
+	return q;
+}

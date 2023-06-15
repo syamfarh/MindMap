@@ -1,7 +1,7 @@
 import {Alert, View, TextInput, Button, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
-import { createMood, getMoodQueue } from '../helper';
+import { createMood, getMoodDatabase, getMoodQueue, editMoodDatabase } from '../helper';
 import { auth } from "../firebase-setup";
 import { onSnapshot } from 'firebase/firestore';
 
@@ -9,6 +9,7 @@ export default function App({ navigation }) {
 
     const [selected, setSelected] = useState('');
     const [moodList, setMoodLists] = useState({}); 
+    const [moodData, setMoodData] = useState({}); 
     const [filteredList, setfilteredList] = useState([]);
     var date = new Date().getDate().toString(); //Current Date
     var month = (new Date().getMonth() + 1).toString(); //Current Month
@@ -29,6 +30,22 @@ export default function App({ navigation }) {
             date: currentDate,
             userId: auth.currentUser.uid
         });
+        if (tdy === 'happy') {
+            moodData[0].happy = moodData[0].happy + 1;
+        } else if (tdy === 'sad') {
+            moodData[0].sad = moodData[0].sad + 1;
+        } else {
+            moodData[0].angry = moodData[0].angry + 1;
+        };
+        editMoodDatabase(moodData[0].itemID,
+            {
+                happy: moodData[0].happy,
+                sad: moodData[0].sad,
+                angry: moodData[0].angry,
+                userId: moodData[0].userId,
+            }
+          )
+
     }
 
     useEffect(() => {
@@ -50,6 +67,32 @@ export default function App({ navigation }) {
                             newMoods.map((a) => exist[a.date] = a.mood);
                             setMoodLists(exist);
                             
+                        }
+                    },
+                (err) => {
+                    console.log(err);
+                }
+            );
+            
+            return () => {
+                unsubscribe();
+            };
+            
+      },[])
+
+      useEffect(() => {
+        let q = getMoodDatabase();
+        const unsubscribe = onSnapshot(
+                q,
+                (querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        setMoodData([]);  
+                    } else {
+                        const newMoods = [];
+                        querySnapshot.docs.forEach((doc) => {
+                            newMoods.push({...doc.data(),itemID: doc.id});
+                            });
+                        setMoodData(newMoods);
                         }
                     },
                 (err) => {
