@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, useState } from "react";
-import { Text, TouchableOpacity, StyleSheet, TextInput, View, Touchable } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, TextInput, View, Alert } from "react-native";
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-setup";
 import { createMoodDatabase } from '../helper';
@@ -11,7 +11,12 @@ export default function App({navigation}) {
   const [conPass, setconPass] = useState('');
 
   const handleSignUp = () => {
-    if (conPass !== password) {
+    if (!validateEmail()) {
+      Alert.alert("Please enter a valid email address");
+      return;
+    } else if (!validatePassword()) {
+        Alert.alert("You password must be at least 8 character");
+    } else if (conPass !== password) {
         alert("password not the same");
     } else {
       createUserWithEmailAndPassword(auth, email, password)
@@ -26,17 +31,36 @@ export default function App({navigation}) {
           userId: auth.currentUser.uid
       });
       })
-      .catch(error => console.log(error.message))
+      .catch(error => {console.log(error.message); Alert.alert(error.message);})
+    }
+  }
+
+  validateEmail = () => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(email) === false) {
+      console.log("Email is Not Correct");
+      return false;
+    } else {
+        console.log("Email is Correct");
+        return true;
+    }
+  }
+
+  validatePassword = () => {
+    if (password.length < 8) {
+      return false;
+    } else {
+      return true;
     }
   }
 
   const pressedLogin = () => {
-    navigation.navigate("Login");
+    navigation.replace("Login");
   }
   
     return (
     <View>
-      
+
       <Text style={styles.welcomeText}>
         Hello! Register to get started
       </Text>

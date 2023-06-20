@@ -12,6 +12,7 @@ import {
     ContributionGraph,
     StackedBarChart
   } from "react-native-chart-kit";
+import { signOut } from 'firebase/auth';
 
 export default function App({ route, navigation }) {
     const [moodData, setMoodData] = useState({}); 
@@ -48,8 +49,8 @@ export default function App({ route, navigation }) {
             
       },[])
     return (
-        <View>
-            <Text> Test </Text>
+        <View style={styles.container}>
+            
         <BarChart
             data={{
             labels: ["Happy", "Sad", "Angry"],
@@ -61,18 +62,18 @@ export default function App({ route, navigation }) {
     }}
     width={Dimensions.get("window").width} // from react-native
     height={220}
-    yAxisLabel="$"
-    yAxisSuffix="k"
+    yAxisLabel=""
+    yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
     chartConfig={{
       backgroundColor: "#e26a00",
       backgroundGradientFrom: "#fb8c00",
       backgroundGradientTo: "#ffa726",
-      decimalPlaces: 2, // optional, defaults to 2dp
+      decimalPlaces: 1, // optional, defaults to 2dp
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       style: {
-        borderRadius: 16
+        borderRadius: 16,
       },
       propsForDots: {
         r: "6",
@@ -86,13 +87,43 @@ export default function App({ route, navigation }) {
       borderRadius: 16
     }}
   />
-        </View>
+
+    <TouchableOpacity style={styles.LogOutButton} onPress={() => signOut(auth)}>
+      <Text style={styles.logOutText}>Logout</Text>
+    </TouchableOpacity>
+    
+    </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  logOutText: {
+    position: 'absolute',
+    width: "100%",
+    height: 20,
+    top: 18,
+    color: '#FFFFFF',
+    fontSize: 15,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+  },  
+
+  LogOutButton: {
+    width: 330,
+    top: 240,
+    height: 56,
+    backgroundColor: '#1E232C',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+  },
+
+
 })
 
