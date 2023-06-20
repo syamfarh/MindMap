@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity} from "react-native";
+import {StyleSheet, Text, View, TextInput, TouchableOpacity} from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import React, {useEffect, FC, ReactElement, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { auth } from "../firebase-setup";
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,21 +17,9 @@ export default function App({navigation}) {
         console.log(error.message);
         window.alert("Invalid password. Try again");})
     }
- 
-  useEffect(() => {
-    const unsubsribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        });
-      }
-    })
-    return unsubsribe
-  }, [])
 
   const pressedReg = () => {
-    navigation.navigate("Registration");
+    navigation.replace("Registration");
   }
 
   return (
