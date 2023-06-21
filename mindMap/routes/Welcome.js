@@ -9,7 +9,7 @@ export default function App({ navigation }) {
         navigation.navigate("Registration");
       }
     return (
-        <View >
+        <View style={styles.container}>
             <ImageBackground source={require('../assets/skyblue.jpg')} style={styles.background} >
                 <View style={styles.picComponent}>
                     <Image source={require('../assets/moonchild.jpg')} style={styles.imageStyle} />
@@ -29,9 +29,14 @@ export default function App({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex:1,
+    },
     background: {
-        width:500,
-        height:1000,
+        width:'100%',
+        height:'100%',
         opacity:0.9,
     },
     imageStyle: {
@@ -57,15 +62,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    viewStyle: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
     login: {
         backgroundColor: '#1E232C',
-        justifyContent: 'center',
-        alignItems: 'center',
         width: 331,
         height: 56,
         top: 510,
@@ -85,8 +83,6 @@ const styles = StyleSheet.create({
 
     register: {
         borderWidth: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         width: 331,
         height: 56,
         top: 520,

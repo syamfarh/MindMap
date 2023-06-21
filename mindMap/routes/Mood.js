@@ -10,7 +10,6 @@ export default function App({ navigation }) {
     const [selected, setSelected] = useState('');
     const [moodList, setMoodLists] = useState({}); 
     const [moodData, setMoodData] = useState({}); 
-    const [filteredList, setfilteredList] = useState([]);
     var date = new Date().getDate().toString(); //Current Date
     var month = (new Date().getMonth() + 1).toString(); //Current Month
     var year = new Date().getFullYear().toString(); //Current Year
@@ -105,39 +104,43 @@ export default function App({ navigation }) {
             };
             
       },[])
-
-
-    return ( isVisible ? (
+    
+    const MoodAddModel = (
+        
         <View style={styles.trueView}>
-        <Text style={styles.headerText}>How are you feeling today?</Text>
-        <View style={styles.emojiView}>
-            <TouchableOpacity onPress={() => newMood('angry')}>
-                <Image source={require('../assets/angry.png')} style={styles.imageStyle}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => newMood('happy')}>
-                <Image source={require('../assets/laughing-emoji.png')} style={styles.imageStyle}/>    
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => newMood('sad')}>
-                <Image source={require('../assets/sad.png')} style={styles.imageStyle}/>
-            </TouchableOpacity>
+            <Text style={styles.headerText}>How are you feeling today?</Text>
+            <View style={styles.emojiView}>
+                <TouchableOpacity onPress={() => newMood('angry')}>
+                    <Image source={require('../assets/angry.png')} style={styles.imageStyle}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => newMood('happy')}>
+                    <Image source={require('../assets/laughing-emoji.png')} style={styles.imageStyle}/>    
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => newMood('sad')}>
+                    <Image source={require('../assets/sad.png')} style={styles.imageStyle}/>
+                </TouchableOpacity>
+            </View>
         </View>
-        </View>) :
+    )
+
+    const CalendarModel = (
+        
         <View>
             <Calendar style= {styles.calendarStyle} onDayPress={day => { setSelected(day.dateString);}}
-                    markingType="custom"
-                    dayComponent={({date, state}) => {
-                        return (
-                            (moodList.hasOwnProperty(date.dateString)) ? 
-                                (moodList[date.dateString] === 'sad') ? (
-                                    <View>
-                                        <Image source={require('../assets/sad.png')} style={styles.dayStyle}/>  
-                                    </View>
-                                ):
-                                (moodList[date.dateString] === 'happy' ? (
-                                    <View>
-                                        <Image source={require('../assets/laughing-emoji.png')} style={styles.dayStyle}/>  
-                                    </View>
-                                ):
+                markingType="custom"
+                dayComponent={({date, state}) => {
+                    return (
+                        (moodList.hasOwnProperty(date.dateString)) ? 
+                            (moodList[date.dateString] === 'sad') ? (
+                                <View>
+                                    <Image source={require('../assets/sad.png')} style={styles.dayStyle}/>  
+                                </View>
+                            ):
+                            (moodList[date.dateString] === 'happy' ? (
+                                <View>
+                                    <Image source={require('../assets/laughing-emoji.png')} style={styles.dayStyle}/>  
+                                </View>
+                            ):
                                 ( 
                                     <View>
                                         <Image source={require('../assets/angry.png')} style={styles.dayStyle}/>  
@@ -148,8 +151,14 @@ export default function App({ navigation }) {
                         );
                     }}
                         
-            />
+                />
         </View>
+    )
+
+    return (
+        <>
+            {isVisible ? MoodAddModel : CalendarModel}
+        </>
     );
   }
 

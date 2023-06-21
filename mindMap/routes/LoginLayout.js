@@ -23,7 +23,7 @@ export default function App({ navigation }) {
   }
 
   return (
-    <View > 
+    <View style={styles.container}> 
       <Text style={styles.welcomeText}>
         Welcome back! Glad to see you again!
       </Text>
@@ -53,22 +53,23 @@ export default function App({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+      flex:1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      rowGap: 20,
+      top:-10,
+    },
     welcomeText: {
-      position: 'absolute',
-      width: 280,
+      width: 331,
       height: 78,
-      left: 22,
-      top: 125,
       fontWeight: 700,
       fontSize: 30,
     },
 
     emailInput: {
-      position: 'absolute',
       width: 331,
       height: 56,
-      left: 22,
-      top: 235,
       borderRadius: 8,
       borderColor: '#1E232C',
       borderWidth: 1,
@@ -78,11 +79,8 @@ const styles = StyleSheet.create({
     },
 
     passwordInput: {
-      position: 'absolute',
       width: 331,
       height: 56,
-      left: 22,
-      top: 306,
       borderRadius: 8,
       borderWidth: 1,
       backgroundColor: '#F7F8F9',
@@ -91,11 +89,8 @@ const styles = StyleSheet.create({
     },
 
     loginBtn: { 
-      position: 'absolute',
       width: 331,
       height: 56,
-      left: 22,
-      top: 424,
       backgroundColor: '#1E232C',
       justifyContent: 'center',
       alignItems: 'center',
@@ -103,10 +98,8 @@ const styles = StyleSheet.create({
     },
 
     loginText: {
-      position: 'absolute',
       width: "100%",
       height: 20,
-      top: 18,
       color: '#FFFFFF',
       fontSize: 15,
       textAlign: 'center',
@@ -114,11 +107,8 @@ const styles = StyleSheet.create({
     },
 
     regNow: {
-      position: 'absolute',
       width: 253,
       height: 21,
-      left: 70,
-      top: 520
     },
   
     regLink: {

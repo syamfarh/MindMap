@@ -10,12 +10,21 @@ export default function App({ route, navigation }) {
     const [name, setName] = useState("New Document");
     const [change, setChange] = useState(true);
     const [edited, setEdited] = useState(false);
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    const [currentDate, setCurrentDate] = useState(date + '/' + month + '/' + year + ' ' + hours + ':' + min);
+    var date = new Date().getDate().toString(); //Current Date
+    var month = (new Date().getMonth() + 1).toString(); //Current Month
+    var year = new Date().getFullYear().toString(); //Current Year
+    var hours = new Date().getHours().toString(); //Current Hours
+    var min = new Date().getMinutes().toString(); //Current Minutes
+    if (date.length == 1) {
+      date = '0' + date;
+    }
+    if (month.length == 1) {
+      month = '0' + month;
+    }
+    if (min.length == 1) {
+      min = '0' + min;
+    }
+    const [currentDate, setCurrentDate] = useState(year + '-' + month + '-' + date + ' ' + hours + ':' + min);
 
 
     const pressedBack = () => {

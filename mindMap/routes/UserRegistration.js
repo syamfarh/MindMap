@@ -59,7 +59,7 @@ export default function App({navigation}) {
   }
   
     return (
-    <View>
+    <View style={styles.container}>
 
       <Text style={styles.welcomeText}>
         Hello! Register to get started
@@ -106,23 +106,24 @@ export default function App({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    rowGap: 10,
+    top:-10,
+  },
 
   welcomeText: {
-    position: 'absolute',
     width: 280,
     height: 78,
-    left: 22,
-    top: 125,
     fontWeight: 700,
     fontSize: 30,
   },
 
   emailInput: {
-    position: 'absolute',
     width: 331,
     height: 56,
-    left: 22,
-    top: 235,
     borderRadius: 8,
     borderColor: '#1E232C',
     borderWidth: 1,
@@ -132,11 +133,8 @@ const styles = StyleSheet.create({
   },
 
   passwordInput: {
-    position: 'absolute',
     width: 331,
     height: 56,
-    left: 22,
-    top: 303,
     borderRadius: 8,
     borderColor: '#1E232C',
     borderWidth: 1,
@@ -146,11 +144,8 @@ const styles = StyleSheet.create({
   },
 
   confirmInput: {
-    position: 'absolute',
     width: 331,
     height: 56,
-    left: 22,
-    top: 371,
     borderRadius: 8,
     borderColor: '#1E232C',
     borderWidth: 1,
@@ -160,11 +155,8 @@ const styles = StyleSheet.create({
   },
 
   registerButton: {
-    position: 'absolute',
     width: 331,
     height: 56,
-    left: 22,
-    top: 439,
     backgroundColor: '#1E232C',
     justifyContent: 'center',
     alignItems: 'center',
@@ -182,11 +174,8 @@ const styles = StyleSheet.create({
 },
 
   loginNow: {
-    position: 'absolute',
     width: 253,
     height: 21,
-    left: 70,
-    top: 520
   },
 
   loginLink: {
