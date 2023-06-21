@@ -96,11 +96,13 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
 
     container: {
+      paddingLeft: 10,
+      paddingRight: 10,
       flexDirection: "row",
       alignItems: 'center',
+      justifyContent: 'space-between',
       backgroundColor: '#63C1F5',
       width: '100%',
-      borderRadius: 10,
       borderColor: '#000305',
       borderWidth: 0.5,
     },

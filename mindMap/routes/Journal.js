@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import { createJournal, editJournal } from '../helper';
 import { auth } from "../firebase-setup";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App({ route, navigation }) {
     const { item } = route.params;
@@ -10,6 +11,7 @@ export default function App({ route, navigation }) {
     const [name, setName] = useState("New Document");
     const [change, setChange] = useState(true);
     const [edited, setEdited] = useState(false);
+    const [wordCount, setWordCount] = useState(0);
     var date = new Date().getDate().toString(); //Current Date
     var month = (new Date().getMonth() + 1).toString(); //Current Month
     var year = new Date().getFullYear().toString(); //Current Year
@@ -103,8 +105,22 @@ export default function App({ route, navigation }) {
       [navigation, change]
     );
 
+    useEffect(() => {
+      // array of words
+      const words = diary.split(' ');
+  
+      // update word count
+      let wordCount = 0;
+      words.forEach((word) => {
+        if (word.trim() !== '') {
+          wordCount++;
+        }
+      });
+      setWordCount(wordCount);
+    }, [diary]);
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.bar}>
                 <TouchableOpacity onPress={pressedBack}>
                     <Entypo name="save" size={30}></Entypo>
@@ -113,13 +129,14 @@ export default function App({ route, navigation }) {
                 onChangeText={setName}></TextInput>
                 <Entypo name="menu" size={30}></Entypo>
             </View> 
-            <View>
-                <Text style={styles.dateStyle}>{currentDate}</Text>
+            <View style={styles.subHeader}>
+              <Text >{wordCount} words</Text>
+              <Text style={styles.dateStyle}>{currentDate}</Text>
             </View>
             <TextInput style={styles.textInput} multiline={true} defaultValue={diary} 
             onChangeText={text => {setDiary(text);if(!change)setChange(true)}}>
             </TextInput>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -129,14 +146,20 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     bar: {
-        backgroundColor: '#757575',
-        position: 'absolute',
+        backgroundColor: '#63C1F5',
         height: 60,
-        top: 50,
         width: "100%",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: 'center',
+        borderWidth: 0.5,
+    },
+
+    subHeader: {
+      width: '100%',
+      flexDirection: 'row',
+      paddingLeft: 5,
+      paddingBottom: 10,
     },
     
     docHeader: {
@@ -147,20 +170,15 @@ const styles = StyleSheet.create({
     },
 
     dateStyle: {
-        position: 'absolute',
-        height: 50,
-        width: "100%",
-        padding:5,
-        top: 110,
-        left: 150,
+        left: 95,
     },
 
     textInput: {
-        top: 130,
-        flex:1,
         padding: 5,
         textAlign:'left',
         textAlignVertical: 'top',
+        height:'100%',
+        
     },
   });
 
