@@ -76,7 +76,8 @@ export default function App({ navigation }) {
   },[])
 
     return (
-          <View >
+          <View>
+            <Text style={styles.headerText}>My Journal</Text>
             <SafeAreaView style={styles.flat}>
               <FlatList 
                 data={journals}
@@ -99,10 +100,19 @@ const styles = StyleSheet.create({
       flex:1,
     },
 
+    headerText: {
+      width: '100%',
+      height: 78,
+      top:30,
+      fontWeight: 700,
+      fontSize: 30,
+      padding: 20,
+    },
+
     flat: {
       justifyContent: 'center',
       padding: 20,
-      marginTop:80,
+      //marginTop:80,
     },
 
     eachJournal: {

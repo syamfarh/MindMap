@@ -1,18 +1,18 @@
-import {Alert, View, TextInput, Button, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
+import {Alert, View, TextInput, Button, StyleSheet, TouchableOpacity, Text, Image, Modal} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
-import { createMood, getMoodDatabase, getMoodQueue, editMoodDatabase } from '../helper';
+import { createMood, getMoodDatabase, getMoodQueue, editMoodDatabase, editMood} from '../helper';
 import { auth } from "../firebase-setup";
 import { onSnapshot } from 'firebase/firestore';
 
 export default function App({ navigation }) {
 
-    const [selected, setSelected] = useState('');
     const [moodList, setMoodLists] = useState({}); 
     const [moodData, setMoodData] = useState({}); 
     var date = new Date().getDate().toString(); //Current Date
     var month = (new Date().getMonth() + 1).toString(); //Current Month
     var year = new Date().getFullYear().toString(); //Current Year
+    var todayDate = Date.now();
     if (date.length == 1) {
         date = '0' + date;
     }
@@ -21,21 +21,43 @@ export default function App({ navigation }) {
     }
     const [currentDate, setCurrentDate] = useState(year + '-' + month + '-' + date);
     const [isVisible, setIsVisible] = useState(true);
+    const [editedDate, setEditedDate] = useState(currentDate);
 
 
     const newMood = (tdy) => {
-        createMood({
-            mood: tdy,
-            date: currentDate,
-            userId: auth.currentUser.uid
-        });
+        var currentMood;
+        console.log(editedDate);
+        if (moodList.hasOwnProperty(editedDate)) {
+            currentMood = moodList[editedDate]['mood'];
+            editMood(moodList[editedDate]['itemID'],
+                {
+                  mood: tdy,
+                  date: editedDate,
+                  userId: auth.currentUser.uid
+                }
+              )
+        } else {
+            createMood({
+                mood: tdy,
+                date: editedDate,
+                userId: auth.currentUser.uid
+            });
+        }
         if (tdy === 'happy') {
             moodData[0].happy = moodData[0].happy + 1;
         } else if (tdy === 'sad') {
             moodData[0].sad = moodData[0].sad + 1;
-        } else {
+        } else if (tdy === 'angry') {
             moodData[0].angry = moodData[0].angry + 1;
         };
+        if (currentMood === 'happy') {
+            moodData[0].happy = moodData[0].happy - 1;
+        } else if (currentMood === 'sad') {
+            moodData[0].sad = moodData[0].sad - 1;
+        } else if (currentMood === 'angry'){
+            moodData[0].angry = moodData[0].angry - 1;
+        };
+
         editMoodDatabase(moodData[0].itemID,
             {
                 happy: moodData[0].happy,
@@ -43,7 +65,8 @@ export default function App({ navigation }) {
                 angry: moodData[0].angry,
                 userId: moodData[0].userId,
             }
-          )
+        );
+
 
     }
 
@@ -57,15 +80,19 @@ export default function App({ navigation }) {
                     } else {
                         const newMoods = [];
                         querySnapshot.docs.forEach((doc) => {
-                            newMoods.push({...doc.data()});
+                            
+                            newMoods.push({date: doc.data().date, mood: doc.data().mood,itemID: doc.id});
                             if (doc.data().date == currentDate) {
                                 setIsVisible(false);
                             };
                             });
                             var exist = {};
-                            newMoods.map((a) => exist[a.date] = a.mood);
+                            newMoods.forEach((a) => {
+                                exist[a.date] = {}; 
+                                exist[a.date]['mood'] = a.mood; 
+                                exist[a.date]['itemID'] = a.itemID
+                            })
                             setMoodLists(exist);
-                            
                         }
                     },
                 (err) => {
@@ -105,10 +132,50 @@ export default function App({ navigation }) {
             
       },[])
     
-    const MoodAddModel = (
-        
+    function Mapper(date, mood, itemID) {
+        this.date = date;
+        this.mood = mood;
+        this.itemID = itemID;
+    }
+    return (
         <View style={styles.trueView}>
-            <Text style={styles.headerText}>How are you feeling today?</Text>
+        <Calendar style= {styles.calendarStyle} onDayPress={day => { setSelected(day.dateString);}}
+            markingType="custom"
+            dayComponent={({date, state}) => {
+                return (
+                    (moodList.hasOwnProperty(date.dateString)) ? 
+                        (moodList[date.dateString]['mood'] === 'sad') ? (
+                            <TouchableOpacity onPress={() => {setEditedDate(date.dateString); setIsVisible(true)}}>
+                                <Image source={require('../assets/sad.png')} style={styles.dayStyle}/>  
+                            </TouchableOpacity>
+                        ):
+                        (moodList[date.dateString]['mood'] === 'happy' ? (
+                            <TouchableOpacity onPress={() => {setEditedDate(date.dateString); setIsVisible(true)}}>
+                                <Image source={require('../assets/laughing-emoji.png')} style={styles.dayStyle}/>  
+                            </TouchableOpacity>
+                        ):
+                            ( 
+                                <TouchableOpacity onPress={() => {setEditedDate(date.dateString); setIsVisible(true)}}>
+                                    <Image source={require('../assets/angry.png')} style={styles.dayStyle}/>  
+                                </TouchableOpacity>
+                            )
+                        ):
+                        (<TouchableOpacity onPress={() => {if (todayDate > date.timestamp) {setIsVisible(true)}; 
+                                                                                            setEditedDate(date.dateString); 
+                                                          }}>
+                            <Text> {date.day} </Text>
+                        </TouchableOpacity>
+                        )
+                    );
+                }}
+                    
+        />
+        <Modal 
+        style={styles.trueView}
+        visible={isVisible}
+        onRequestClose={() => setIsVisible(false)}
+        >
+            <Text style={styles.headerText}>How are you feeling on {editedDate} ?</Text>
             <View style={styles.emojiView}>
                 <TouchableOpacity onPress={() => newMood('angry')}>
                     <Image source={require('../assets/angry.png')} style={styles.imageStyle}/>
@@ -120,53 +187,21 @@ export default function App({ navigation }) {
                     <Image source={require('../assets/sad.png')} style={styles.imageStyle}/>
                 </TouchableOpacity>
             </View>
-        </View>
-    )
-
-    const CalendarModel = (
-        
-        <View>
-            <Calendar style= {styles.calendarStyle} onDayPress={day => { setSelected(day.dateString);}}
-                markingType="custom"
-                dayComponent={({date, state}) => {
-                    return (
-                        (moodList.hasOwnProperty(date.dateString)) ? 
-                            (moodList[date.dateString] === 'sad') ? (
-                                <View>
-                                    <Image source={require('../assets/sad.png')} style={styles.dayStyle}/>  
-                                </View>
-                            ):
-                            (moodList[date.dateString] === 'happy' ? (
-                                <View>
-                                    <Image source={require('../assets/laughing-emoji.png')} style={styles.dayStyle}/>  
-                                </View>
-                            ):
-                                ( 
-                                    <View>
-                                        <Image source={require('../assets/angry.png')} style={styles.dayStyle}/>  
-                                    </View>
-                                )
-                            ):
-                            (<Text>{date.day}</Text>)
-                        );
-                    }}
-                        
-                />
-        </View>
-    )
-
-    return (
-        <>
-            {isVisible ? MoodAddModel : CalendarModel}
-        </>
+        </Modal>
+    </View>
     );
-  }
+}
 
 
 const styles = StyleSheet.create({
     trueView: {
         flex:1,
     },
+
+    modal: {
+        flex: 1,
+    },
+
     headerText: {
         padding:20,
         top:150,

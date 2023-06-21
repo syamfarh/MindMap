@@ -75,6 +75,16 @@ export function getMoodQueue() {
 	return q;
 }
 
+export async function editMood(id, updateField) {
+	try {
+		const docRef = doc(firestore, "mood", id);
+		await updateDoc(docRef, updateField);
+		console.log("Document updated with ID: ", id);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 export async function createMoodDatabase(tdy) {
 	const docRef = await addDoc(collection(firestore, "moodDatabase"), {
 		happy: tdy.happy,
@@ -95,6 +105,8 @@ export async function editMoodDatabase(id, updateField) {
 		console.log(err);
 	}
 }
+
+
 
 export function getMoodDatabase() {
 	const q = query(

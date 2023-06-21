@@ -1,4 +1,3 @@
-import Entypo from 'react-native-vector-icons/Entypo'
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert, Dimensions } from 'react-native';
 import { getMoodDatabase } from '../helper';
@@ -48,46 +47,47 @@ export default function App({ route, navigation }) {
             };
             
       },[])
+    
     return (
-        <View style={styles.container}>
-            
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Mood Count</Text>
         <BarChart
             data={{
             labels: ["Happy", "Sad", "Angry"],
             datasets: [
                 {
                 data: moodList
-        }
-      ]
-    }}
-    width={Dimensions.get("window").width} // from react-native
-    height={220}
-    yAxisLabel=""
-    yAxisSuffix=""
-    yAxisInterval={1} // optional, defaults to 1
-    chartConfig={{
-      backgroundColor: "#e26a00",
-      backgroundGradientFrom: "#fb8c00",
-      backgroundGradientTo: "#ffa726",
-      decimalPlaces: 1, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16,
-      },
-      propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 16
-    }}
-  />
-
+                }
+            ]
+            }}
+            width={Dimensions.get("window").width} // from react-native
+            height={220}
+            yAxisLabel=""
+            yAxisSuffix=""
+            yAxisInterval={1} // optional, defaults to 1
+            fromZero
+            chartConfig={{
+              backgroundColor: "#63C1F5", 
+              backgroundGradientFrom: "#63C1F5", 
+              backgroundGradientTo: "#96D1F1", 
+              decimalPlaces: 1, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "#ffa726"
+              }
+            }}
+            bezier
+            style={{
+              marginVertical: 8,
+              borderRadius: 16
+            }}
+        />
     <TouchableOpacity style={styles.LogOutButton} onPress={() => signOut(auth)}>
       <Text style={styles.logOutText}>Logout</Text>
     </TouchableOpacity>
@@ -102,7 +102,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  
+  titleText: {
+    fontWeight: 700,
+    fontSize: 20,
+  },
+  
   logOutText: {
     position: 'absolute',
     width: "100%",
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
 
   LogOutButton: {
     width: 330,
-    top: 240,
+    top: 230,
     height: 56,
     backgroundColor: '#1E232C',
     justifyContent: 'center',
