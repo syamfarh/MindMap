@@ -132,11 +132,6 @@ export default function App({ navigation }) {
             
       },[])
     
-    function Mapper(date, mood, itemID) {
-        this.date = date;
-        this.mood = mood;
-        this.itemID = itemID;
-    }
     return (
         <View style={styles.trueView}>
         <Calendar style= {styles.calendarStyle} onDayPress={day => { setSelected(day.dateString);}}
@@ -196,6 +191,7 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
     trueView: {
         flex:1,
+        backgroundColor: '#63C1F5'
     },
 
     modal: {

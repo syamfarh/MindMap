@@ -76,13 +76,14 @@ export default function App({ navigation }) {
   },[])
 
     return (
-          <View>
+          <View style={flex=1}>
             <Text style={styles.headerText}>My Journal</Text>
             <SafeAreaView style={styles.flat}>
               <FlatList 
                 data={journals}
                 keyExtractor={(item) => item.itemID}
                 renderItem={renderButton}
+                
               />
             </SafeAreaView>
             <TouchableOpacity style={styles.button} onPress={addNewJournal}>
@@ -97,7 +98,11 @@ const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
       alignItems: 'center',
-      flex:1,
+      backgroundColor: '#63C1F5',
+      width: '100%',
+      borderRadius: 10,
+      borderColor: '#000305',
+      borderWidth: 0.5,
     },
 
     headerText: {
@@ -111,8 +116,8 @@ const styles = StyleSheet.create({
 
     flat: {
       justifyContent: 'center',
-      padding: 20,
-      //marginTop:80,
+      paddingTop: 30,
+      
     },
 
     eachJournal: {
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         borderRadius: 100,
-        backgroundColor: '#246AA9',
+        backgroundColor: '#63C1F5',
         position: 'absolute',
         right:50,
         top:700
