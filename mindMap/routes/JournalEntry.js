@@ -152,11 +152,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#63C1F5',
         position: 'absolute',
         right:50,
-        top:700
+        top:625
     },
 
     buttonText: {
-      bottom:3,
+      bottom:8,
       fontSize:40,
       fontWeight:300,
     }

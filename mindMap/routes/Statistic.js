@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
   logOutText: {
     position: 'absolute',
     width: "100%",
-    height: 20,
-    top: 18,
+    height: 30,
+    top: 12,
     color: '#FFFFFF',
     fontSize: 15,
     textAlign: 'center',
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 
   LogOutButton: {
     width: 330,
-    top: 230,
+    top: 150,
     height: 56,
     backgroundColor: '#1E232C',
     justifyContent: 'center',

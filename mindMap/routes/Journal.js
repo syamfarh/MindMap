@@ -1,3 +1,8 @@
+//add back button for journal
+//improve UI
+//make it accessible from calender
+//show mood on journal
+
 import Entypo from 'react-native-vector-icons/Entypo'
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
