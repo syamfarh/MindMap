@@ -6,7 +6,7 @@ import { auth } from "../firebase-setup";
 import { onSnapshot } from 'firebase/firestore';
 
 export default function App({ navigation }) {
-
+ 
     const [moodList, setMoodLists] = useState({}); 
     const [moodData, setMoodData] = useState({}); 
     var date = new Date().getDate().toString(); //Current Date
