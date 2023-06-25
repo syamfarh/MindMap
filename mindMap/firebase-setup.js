@@ -2,7 +2,7 @@
 import * as firebase from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from 'firebase/storage';
+import { getStorage } from "firebase/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -17,7 +17,7 @@ const firebaseConfig = {
   storageBucket: "mindmap-1379f.appspot.com",
   messagingSenderId: "413225519539",
   appId: "1:413225519539:web:7e5dfbc94e23cf969f23c6",
-  measurementId: "G-582EEDYHKH"
+  measurementId: "G-582EEDYHKH",
 };
 
 // Initialize Firebase
@@ -25,7 +25,6 @@ const app = firebase.initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
 //const analytics = getAnalytics(app);
 export const auth = initializeAuth(app, {
-	persistence: getReactNativePersistence(AsyncStorage),
+  persistence: getReactNativePersistence(AsyncStorage),
 });
 export const storage = getStorage(app);
-

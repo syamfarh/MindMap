@@ -1,39 +1,48 @@
 import React, { FC, ReactElement, useState } from "react";
-import { Text, TouchableOpacity, StyleSheet, TextInput, View, Alert } from "react-native";
-import {createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  View,
+  Alert,
+} from "react-native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-setup";
-import { createMoodDatabase } from '../helper';
+import { createMoodDatabase } from "../helper";
 
-export default function App({navigation}) {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [conPass, setconPass] = useState('');
+export default function App({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [conPass, setconPass] = useState("");
 
   const handleSignUp = () => {
     if (!validateEmail()) {
       Alert.alert("Please enter a valid email address");
       return;
     } else if (!validatePassword()) {
-        Alert.alert("You password must be at least 8 character");
+      Alert.alert("You password must be at least 8 character");
     } else if (conPass !== password) {
-        alert("password not the same");
+      alert("password not the same");
     } else {
       createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        alert("successful");
-        console.log(user.email);
-        createMoodDatabase({
-          happy: 0,
-          sad: 0,
-          angry: 0,
-          userId: auth.currentUser.uid
-      });
-      })
-      .catch(error => {console.log(error.message); Alert.alert(error.message);})
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          alert("successful");
+          console.log(user.email);
+          createMoodDatabase({
+            happy: 0,
+            sad: 0,
+            angry: 0,
+            userId: auth.currentUser.uid,
+          });
+        })
+        .catch((error) => {
+          console.log(error.message);
+          Alert.alert(error.message);
+        });
     }
-  }
+  };
 
   validateEmail = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -41,10 +50,10 @@ export default function App({navigation}) {
       console.log("Email is Not Correct");
       return false;
     } else {
-        console.log("Email is Correct");
-        return true;
+      console.log("Email is Correct");
+      return true;
     }
-  }
+  };
 
   validatePassword = () => {
     if (password.length < 8) {
@@ -52,25 +61,22 @@ export default function App({navigation}) {
     } else {
       return true;
     }
-  }
+  };
 
   const pressedLogin = () => {
     navigation.replace("Login");
-  }
-  
-    return (
-    <View style={styles.container}>
+  };
 
-      <Text style={styles.welcomeText}>
-        Hello! Register to get started
-      </Text>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>Hello! Register to get started</Text>
 
       <View>
         <TextInput
           style={styles.emailInput}
           placeholder={"Email"}
           autoCapitalize={"none"}
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
         />
       </View>
 
@@ -78,7 +84,7 @@ export default function App({navigation}) {
         <TextInput
           style={styles.passwordInput}
           placeholder={"Enter Password"}
-          onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           secureTextEntry
         />
       </View>
@@ -87,7 +93,7 @@ export default function App({navigation}) {
         <TextInput
           style={styles.confirmInput}
           placeholder={"Confirm Password"}
-          onChangeText={text => setconPass(text)}
+          onChangeText={(text) => setconPass(text)}
           secureTextEntry
         />
       </View>
@@ -98,8 +104,12 @@ export default function App({navigation}) {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.loginNow}>Already have an account? 
-        <Text style={styles.loginLink}  onPress={pressedLogin}> Login now</Text>
+      <Text style={styles.loginNow}>
+        Already have an account?
+        <Text style={styles.loginLink} onPress={pressedLogin}>
+          {" "}
+          Login now
+        </Text>
       </Text>
     </View>
   );
@@ -107,11 +117,11 @@ export default function App({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     rowGap: 10,
-    top:-10,
+    top: -10,
   },
 
   welcomeText: {
@@ -125,53 +135,53 @@ const styles = StyleSheet.create({
     width: 331,
     height: 56,
     borderRadius: 8,
-    borderColor: '#1E232C',
+    borderColor: "#1E232C",
     borderWidth: 1,
-    backgroundColor: '#F7F8F9',
-    borderColor: '#E8ECF4',
-    padding:20,
+    backgroundColor: "#F7F8F9",
+    borderColor: "#E8ECF4",
+    padding: 20,
   },
 
   passwordInput: {
     width: 331,
     height: 56,
     borderRadius: 8,
-    borderColor: '#1E232C',
+    borderColor: "#1E232C",
     borderWidth: 1,
-    backgroundColor: '#F7F8F9',
-    borderColor: '#E8ECF4',
-    padding:20,
+    backgroundColor: "#F7F8F9",
+    borderColor: "#E8ECF4",
+    padding: 20,
   },
 
   confirmInput: {
     width: 331,
     height: 56,
     borderRadius: 8,
-    borderColor: '#1E232C',
+    borderColor: "#1E232C",
     borderWidth: 1,
-    backgroundColor: '#F7F8F9',
-    borderColor: '#E8ECF4',
-    padding:20,
+    backgroundColor: "#F7F8F9",
+    borderColor: "#E8ECF4",
+    padding: 20,
   },
 
   registerButton: {
     width: 331,
     height: 56,
-    backgroundColor: '#1E232C',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#1E232C",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 8,
-},
+  },
   regText: {
-    position: 'absolute',
+    position: "absolute",
     width: "100%",
     height: 20,
     top: 18,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 15,
-    textAlign: 'center',
-    verticalAlign: 'middle',
-},
+    textAlign: "center",
+    verticalAlign: "middle",
+  },
 
   loginNow: {
     width: 253,
@@ -179,7 +189,6 @@ const styles = StyleSheet.create({
   },
 
   loginLink: {
-    color: '#35C2C1',
-  }
-
+    color: "#35C2C1",
+  },
 });
