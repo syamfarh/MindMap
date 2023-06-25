@@ -10,8 +10,8 @@ import {
 
 const EventList = ({ events, onEventPress }) => {
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => onEventPress(item)}>
-      <View style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={() => onEventPress(item)}>
+      <View>
         <Text numberOfLines={2} style={styles.title}>
           {item.title}
         </Text>
@@ -155,10 +155,9 @@ const styles = StyleSheet.create({
     borderRightWidth: 5,
     borderBottomColor: "#ddd",
     borderRightColor: "#ddd",
-    height: 110,
     backgroundColor: "#63C1F5",
     borderRadius: 20,
-    // alignContent: "center",
+    textAlign: "center",
     justifyContent: "center",
     marginBottom: 20,
     marginLeft: 16,
