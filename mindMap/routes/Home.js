@@ -10,6 +10,7 @@ import Mood from "./Mood";
 import Help from "./Help";
 import { Calendar } from "react-native-calendars";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { StyleSheet } from "react-native";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -35,7 +36,14 @@ export default function App({ navigation }) {
             iconName = focused ? "ios-happy" : "ios-happy-outline";
           }
 
-          return <Ionicons name={iconName} size={25} color={color} />;
+          return (
+            <Ionicons
+              name={iconName}
+              size={25}
+              color={color}
+              //   style={Styles.icon}
+            />
+          );
         },
       })}
     >
@@ -47,3 +55,10 @@ export default function App({ navigation }) {
     </Tab.Navigator>
   );
 }
+
+// const Styles = StyleSheet.create({
+//   icon: {
+//     alignContent: "center",
+//     justifyContent: "center",
+//   },
+// });
