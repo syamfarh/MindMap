@@ -9,6 +9,7 @@ import Statistic from "./Statistic";
 import Mood from "./Mood";
 import Help from "./Help";
 import { Calendar } from "react-native-calendars";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,12 +19,27 @@ export default function App({ navigation }) {
       initialRouteName="Homepage"
       barStyle={{ height: 90 }}
       backBehavior="history"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color }) => {
+          let iconName;
+
+          if (route.name === "Homepage") {
+            iconName = focused ? "ios-home" : "ios-home-outline";
+          } else if (route.name === "Journal") {
+            iconName = focused ? "ios-journal-sharp" : "ios-journal-outline";
+          } else if (route.name === "Events") {
+            iconName = focused ? "ios-megaphone" : "ios-megaphone-outline";
+          } else if (route.name === "Help") {
+            iconName = focused ? "ios-help-buoy" : "ios-help-buoy-outline";
+          } else if (route.name === "Mood") {
+            iconName = focused ? "ios-happy" : "ios-happy-outline";
+          }
+
+          return <Ionicons name={iconName} size={25} color={color} />;
+        },
+      })}
     >
-      <Tab.Screen
-        name="Journal"
-        component={JournalEntry}
-        /*options={{ tabBarBadge: Entypo }}*/
-      />
+      <Tab.Screen name="Journal" component={JournalEntry} />
       <Tab.Screen name="Events" component={Events} />
       <Tab.Screen name="Homepage" component={Statistic} />
       <Tab.Screen name="Help" component={Help} />
