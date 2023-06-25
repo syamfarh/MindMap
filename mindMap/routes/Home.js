@@ -14,10 +14,15 @@ const Tab = createMaterialBottomTabNavigator();
 
 export default function App({ navigation }) {
   return (
-    <Tab.Navigator initialRouteName="Homepage">
+    <Tab.Navigator
+      initialRouteName="Homepage"
+      barStyle={{ height: 90 }}
+      backBehavior="history"
+    >
       <Tab.Screen
         name="Journal"
-        component={JournalEntry} /*options={{ tabBarBadge: Entypo }}*/
+        component={JournalEntry}
+        /*options={{ tabBarBadge: Entypo }}*/
       />
       <Tab.Screen name="Events" component={Events} />
       <Tab.Screen name="Homepage" component={Statistic} />

@@ -1,3 +1,6 @@
+//navigation bar covering documents belows
+//sort journals by date
+
 import Entypo from "react-native-vector-icons/Entypo";
 import React, { useEffect, useState } from "react";
 import {
@@ -125,15 +128,17 @@ const styles = StyleSheet.create({
   headerText: {
     width: "100%",
     height: 78,
-    top: 30,
+    top: 45,
     fontWeight: 700,
     fontSize: 30,
     padding: 20,
+    textAlign: "center",
   },
 
   flat: {
     justifyContent: "center",
-    paddingTop: 30,
+    paddingTop: 50,
+    paddingBottom: 163,
   },
 
   eachJournal: {
