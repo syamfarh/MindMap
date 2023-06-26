@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Event } from "./Event";
 import {
   View,
   FlatList,
@@ -15,7 +16,9 @@ const EventList = ({ events, onEventPress }) => {
         <Text numberOfLines={2} style={styles.title}>
           {item.title}
         </Text>
-        <Text numberOfLines={2}>{item.description}</Text>
+        <Text numberOfLines={2} style={styles.description}>
+          {item.description}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -118,19 +121,14 @@ export default function App({ navigation }) {
   const handleEventPress = (event) => {
     navigation.getParent().navigate("Event", { item: event });
 
-    // Navigate to the event details page
-    // You can use a navigation library like React Navigation for this
-    // Pass the selected event as a prop to the event details page component
     console.log("Selected event:", event);
   };
 
   return (
-    <>
+    <View style={styles.container}>
       <Text style={styles.headerText}>What's Going On?</Text>
-      <View style={styles.container}>
-        <EventList events={events} onEventPress={handleEventPress} />
-      </View>
-    </>
+      <EventList events={events} onEventPress={handleEventPress} />
+    </View>
   );
 }
 
@@ -139,15 +137,17 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 16,
     paddingTop: StatusBar.currentHeight,
+    backgroundColor: "#fdfcdc",
   },
   headerText: {
     width: "100%",
     height: 100,
-    top: 45,
+    // top: 45,
     fontWeight: 700,
     fontSize: 30,
     padding: 20,
     textAlign: "center",
+    color: "#42555E",
   },
   item: {
     padding: 16,
@@ -169,157 +169,10 @@ const styles = StyleSheet.create({
     // marginBottom: 8,
     alignContent: "center",
     justifyContent: "center",
+    color: "#42555E",
+  },
+  description: {
+    color: "#42555E",
   },
   flatList: {},
 });
-
-// import { FacebookAuthProvider } from "firebase/auth";
-// import React, { useEffect, useState } from "react";
-// import { View, Text, StyleSheet, FlatList } from "react-native";
-
-// const Events = () => {
-//     const [events, setEvents] = useState([]);
-//     useEffect(() => {
-//     }, []);
-
-//   return (
-//     <View>
-//       <Text style={styles.headerText}>What's Going On?</Text>
-//       <FlatList keyExtractor={(item) => item.id.toString()}>
-//         data={events}
-//         renderItem={({item}) => (
-//             <view>
-//                 <Text>
-//                     {item.title}
-//                 </Text>
-//                 <Text>
-//                     {item.date}
-//                 </Text>
-//             </view>
-//         )}
-//       </FlatList>
-//     </View>
-//   );
-// };
-
-// export default Events;
-
-// const styles = StyleSheet.create({
-//   headerText: {
-//     width: "100%",
-//     height: 100,
-//     top: 45,
-//     fontWeight: 700,
-//     fontSize: 30,
-//     padding: 20,
-//     textAlign: "center",
-//   },
-// });
-
-//events list that when clicked
-//gives description and can be added to planner automatically as event
-//via another button
-
-// import {
-//     Alert,
-//     View,
-//     TextInput,
-//     Button,
-//     StyleSheet,
-//     TouchableOpacity,
-//     Text,
-//     SafeAreaView,
-//   } from "react-native";
-
-// export default function App({ navigation }) {
-//   const viewEvent = (q) => {
-//     navigation.getParent().navigate("Event", { item: q.item });
-//   };
-
-//   const renderButton = (q) => {
-//     return (
-//       <View style={styles.container}>
-//         <Entypo name="book" size={15}></Entypo>
-//         <TouchableOpacity>
-//           <Text style={styles.eachJournal} onPress={() => viewEvent(q)}>
-//             {" "}
-//             {q.item.name}{" "}
-//           </Text>
-//         </TouchableOpacity>
-//       </View>
-//     );
-//   };
-
-//   return (
-//     <View style={(flex = 1)}>
-//       <Text style={styles.headerText}>What's Going On?</Text>
-//       <SafeAreaView style={styles.flat}>
-//         <FlatList
-//           data={journals}
-//           keyExtractor={(item) => item.itemID}
-//           renderItem={renderButton}
-//         />
-//       </SafeAreaView>
-//       <TouchableOpacity style={styles.button} onPress={addNewJournal}>
-//         <Text style={styles.buttonText}>+</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   headerText: {
-//     width: "100%",
-//     height: 78,
-//     top: 45,
-//     fontWeight: 700,
-//     fontSize: 30,
-//     padding: 20,
-//     textAlign: "center",
-//   },
-
-//   flat: {
-//     justifyContent: "center",
-//     paddingTop: 50,
-//     paddingBottom: 163,
-//   },
-
-//   eachJournal: {
-//     padding: 10,
-//     borderWidth: 0,
-//     flex: 1,
-//     height: 60,
-//     top: 10,
-//     width: 330,
-//   },
-//   entryScreenContainer: {
-//     flex: 1,
-//     bottom: -300,
-//   },
-//   input: {
-//     height: 200,
-//     borderColor: "gray",
-//     borderWidth: 10,
-//     marginBottom: 16,
-//     padding: 100,
-//     alignItems: "flex-end",
-//   },
-//   button: {
-//     width: 70,
-//     height: 70,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     padding: 10,
-//     borderRadius: 100,
-//     backgroundColor: "#d16994",
-//     position: "absolute",
-//     right: 40,
-//     top: 610,
-//   },
-
-//   buttonText: {
-//     bottom: 8,
-//     fontSize: 40,
-//     fontWeight: 300,
-//   },
-// });

@@ -25,11 +25,11 @@ export default function App({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.head}>SOS</Text>
       <TouchableOpacity style={styles.button} onPress={handleCallPress}>
-        <Text style={styles.links}>Click here for NUS counselling hotline</Text>
+        <Text style={styles.links}>NUS counselling hotline</Text>
         <Text style={styles.subtext}> or call +65 6516 7777</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleLinkPress}>
-        <Text style={styles.links}>Click here for NUS counselling website</Text>
+        <Text style={styles.links}>NUS counselling website</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,16 +41,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 50,
+    backgroundColor: "#fed9b7",
     // color: "#63C1F5",
   },
   head: {
     fontSize: 70,
     fontWeight: "bold",
+    color: "#f07167",
   },
   links: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#de2873",
+    color: "#f07167",
     textDecorationLine: "underline",
 
     // paddingBottom: 15,
@@ -61,15 +63,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingTop: 10,
     textAlign: "center",
+    color: "#353535",
   },
   button: {
-    backgroundColor: "#63C1F5",
+    backgroundColor: "#fdfcdc",
     padding: 20,
     // borderBottomWidth: 10,
     // borderBottomColor: "white",
     marginBottom: 20,
     borderRadius: 30,
-    borderColor: "black",
+    borderColor: "#526975",
     borderWidth: 5,
     width: "90%",
   },

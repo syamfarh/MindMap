@@ -95,7 +95,7 @@ export default function App({ navigation }) {
   }, []);
 
   return (
-    <View style={(flex = 1)}>
+    <View style={styles.page}>
       <Text style={styles.headerText}>My Journal</Text>
       <SafeAreaView style={styles.flat}>
         <FlatList
@@ -112,6 +112,10 @@ export default function App({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  page: {
+    backgroundColor: "#fdfcdc",
+    flex: 1,
+  },
   container: {
     paddingLeft: 10,
     paddingRight: 10,
@@ -133,6 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     padding: 20,
     textAlign: "center",
+    color: "#42555E",
   },
 
   flat: {
@@ -168,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderRadius: 100,
-    backgroundColor: "#d16994",
+    backgroundColor: "#fed9b7",
     position: "absolute",
     right: 40,
     top: 610,

@@ -163,7 +163,7 @@ export default function App({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#E0E0E0",
+    backgroundColor: "#fdfcdc",
     flex: 1,
   },
   bar: {

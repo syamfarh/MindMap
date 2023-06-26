@@ -1,5 +1,6 @@
 //add a message based on the mood selected to cheer up or compliment the user
 //change the emojis to go on top of the date so it is still readable if all the days have emojis
+//mood goes to emoji even when input is already in
 
 import {
   Alert,
@@ -248,6 +249,7 @@ const styles = StyleSheet.create({
 
   modal: {
     flex: 1,
+    // paddingTop: 20,
   },
 
   headerText: {

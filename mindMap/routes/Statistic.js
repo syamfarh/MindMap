@@ -73,8 +73,8 @@ export default function App({ route, navigation }) {
         yAxisInterval={1} // optional, defaults to 1
         fromZero
         chartConfig={{
-          backgroundColor: "#63C1F5",
-          backgroundGradientFrom: "#63C1F5",
+          backgroundColor: "#00afb9",
+          backgroundGradientFrom: "#00afb9",
           backgroundGradientTo: "#96D1F1",
           decimalPlaces: 1, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -109,11 +109,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#ADDDF7",
+    // padding: 20,
   },
 
   titleText: {
     fontWeight: 700,
     fontSize: 20,
+    color: "#42555E",
   },
 
   logOutText: {
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     width: 330,
     top: 150,
     height: 56,
-    backgroundColor: "#1E232C",
+    backgroundColor: "#42555E",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,

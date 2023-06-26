@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Journal from "./routes/Journal";
 import Welcome from "./routes/Welcome";
+import Event from "./routes/Event";
 import Home from "./routes/Home";
 import React, { useState, useEffect } from "react";
 import { auth } from "./firebase-setup";
@@ -37,6 +38,7 @@ export default function App() {
     <>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Journal" component={Journal} />
+      <Stack.Screen name="Event" component={Event} />
     </>
   );
   return (
