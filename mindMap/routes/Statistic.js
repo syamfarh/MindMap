@@ -74,8 +74,8 @@ export default function App({ route, navigation }) {
         fromZero
         chartConfig={{
           backgroundColor: "#00afb9",
-          backgroundGradientFrom: "#00afb9",
-          backgroundGradientTo: "#96D1F1",
+          backgroundGradientFrom: "#63C1F5",
+          backgroundGradientTo: "#63C1F5",
           decimalPlaces: 1, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

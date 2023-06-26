@@ -245,6 +245,7 @@ const styles = StyleSheet.create({
   trueView: {
     flex: 1,
     backgroundColor: "#63C1F5",
+    padding: 30,
   },
 
   modal: {
