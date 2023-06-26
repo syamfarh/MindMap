@@ -21,8 +21,10 @@ export default function App({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.headerText}>{item.title}</Text>
-        <Text style={styles.date}>{item.date}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.date}>Date: {item.date}</Text>
+        <View style={styles.subBox}>
+          <Text style={styles.description}>{item.description}</Text>
+        </View>
       </View>
     </View>
   );
@@ -54,7 +56,15 @@ const styles = StyleSheet.create({
     // backgroundColor: "#d16994",
   },
   date: {
-    margin: 10,
+    margin: 20,
+  },
+  subBox: {
+    padding: 20,
+    backgroundColor: "#fed9b7",
+    borderRadius: 30,
+    flex: 1,
+    borderWidth: 3,
+    borderColor: "#aaa",
   },
   description: {
     fontSize: 20,
