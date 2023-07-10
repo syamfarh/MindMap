@@ -275,8 +275,9 @@ const styles = StyleSheet.create({
 
   calendarStyle: {
     top: 100,
-    height: 300,
+    // height: 300,
     borderRadius: 50,
+    padding: 30,
   },
 
   dayStyle: {

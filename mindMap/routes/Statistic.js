@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ScrollView, RefreshControl, SafeAreaView } from "react-native";
 import {
   View,
   TextInput,
@@ -24,6 +25,7 @@ import { signOut } from "firebase/auth";
 export default function App({ route, navigation }) {
   const [moodData, setMoodData] = useState({});
   const [moodList, setMoodList] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     let q = getMoodDatabase();
     const unsubscribe = onSnapshot(
@@ -53,54 +55,65 @@ export default function App({ route, navigation }) {
       unsubscribe();
     };
   }, []);
-
+  const onRefresh = () => {
+    setRefreshing(true);
+    //refresh logic here ...
+    setRefreshing(false);
+  };
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>Mood Count</Text>
-      <BarChart
-        data={{
-          labels: ["Happy", "Sad", "Angry"],
-          datasets: [
-            {
-              data: moodList,
-            },
-          ],
-        }}
-        width={Dimensions.get("window").width} // from react-native
-        height={220}
-        yAxisLabel=""
-        yAxisSuffix=""
-        yAxisInterval={1} // optional, defaults to 1
-        fromZero
-        chartConfig={{
-          backgroundColor: "#00afb9",
-          backgroundGradientFrom: "#63C1F5",
-          backgroundGradientTo: "#63C1F5",
-          decimalPlaces: 1, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#ffa726",
-          },
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-      <TouchableOpacity
-        style={styles.LogOutButton}
-        onPress={() => signOut(auth)}
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
-        <Text style={styles.logOutText}>Logout</Text>
-      </TouchableOpacity>
-    </View>
+        <Text style={styles.titleText}>Mood Count</Text>
+        <BarChart
+          data={{
+            labels: ["Happy", "Sad", "Angry"],
+            datasets: [
+              {
+                data: moodList,
+              },
+            ],
+          }}
+          width={Dimensions.get("window").width} // from react-native
+          height={220}
+          yAxisLabel=""
+          yAxisSuffix=""
+          yAxisInterval={1} // optional, defaults to 1
+          fromZero
+          chartConfig={{
+            backgroundColor: "#00afb9",
+            backgroundGradientFrom: "#63C1F5",
+            backgroundGradientTo: "#63C1F5",
+            decimalPlaces: 1, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+            propsForDots: {
+              r: "6",
+              strokeWidth: "2",
+              stroke: "#ffa726",
+            },
+          }}
+          bezier
+          style={{
+            marginVertical: 8,
+            borderRadius: 16,
+          }}
+        />
+        <TouchableOpacity
+          style={styles.LogOutButton}
+          onPress={() => signOut(auth)}
+        >
+          <Text style={styles.logOutText}>Logout</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -110,12 +123,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ADDDF7",
-    // padding: 20,
+    paddingTop: "10%",
+  },
+
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#ADDDF7",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   titleText: {
     fontWeight: 700,
-    fontSize: 20,
+    fontSize: 30,
     color: "#42555E",
   },
 
@@ -132,7 +152,7 @@ const styles = StyleSheet.create({
 
   LogOutButton: {
     width: 330,
-    top: 150,
+    top: "10%",
     height: 56,
     backgroundColor: "#42555E",
     justifyContent: "center",
