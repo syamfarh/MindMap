@@ -26,6 +26,14 @@ export default function App({ route, navigation }) {
   const [moodData, setMoodData] = useState({});
   const [moodList, setMoodList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [chartData, setChartData] = useState({
+    labels: ["Happy", "Sad", "Angry"],
+    datasets: [
+      {
+        data: moodList,
+      },
+    ],
+  });
   useEffect(() => {
     let q = getMoodDatabase();
     const unsubscribe = onSnapshot(
@@ -57,9 +65,23 @@ export default function App({ route, navigation }) {
   }, []);
   const onRefresh = () => {
     setRefreshing(true);
-    //refresh logic here ...
+    refreshChart();
+    console.log("refreshed");
     setRefreshing(false);
   };
+
+  const refreshChart = () => {
+    const newData = {
+      labels: ["Happy", "Sad", "Angry"],
+      datasets: [
+        {
+          data: moodList,
+        },
+      ],
+    };
+    setChartData(newData);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -69,15 +91,9 @@ export default function App({ route, navigation }) {
         }
       >
         <Text style={styles.titleText}>Mood Count</Text>
+
         <BarChart
-          data={{
-            labels: ["Happy", "Sad", "Angry"],
-            datasets: [
-              {
-                data: moodList,
-              },
-            ],
-          }}
+          data={chartData}
           width={Dimensions.get("window").width} // from react-native
           height={220}
           yAxisLabel=""
