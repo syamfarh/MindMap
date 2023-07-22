@@ -46,12 +46,17 @@ export default function App({ route, navigation }) {
           querySnapshot.docs.forEach((doc) => {
             newMoods.push({ ...doc.data(), itemID: doc.id });
           });
-          if (moodList.length < 3) {
-            moodList.push(newMoods[0].happy);
-            moodList.push(newMoods[0].sad);
-            moodList.push(newMoods[0].angry);
+          if (moodList.length >= 3) {
+            moodList.pop();
+            moodList.pop();
+            moodList.pop();
           }
+          moodList.push(newMoods[0].happy);
+          moodList.push(newMoods[0].sad);
+          moodList.push(newMoods[0].angry);
           setMoodData(newMoods);
+          console.log(moodList);
+          
         }
       },
       (err) => {
@@ -63,6 +68,7 @@ export default function App({ route, navigation }) {
       unsubscribe();
     };
   }, []);
+
   const onRefresh = () => {
     setRefreshing(true);
     refreshChart();
