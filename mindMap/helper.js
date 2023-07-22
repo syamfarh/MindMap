@@ -113,3 +113,11 @@ export function getMoodDatabase() {
   );
   return q;
 }
+
+export function getEventQueue() {
+  const q = query(
+    collection(firestore, "events"),
+    orderBy("date")
+  );
+  return q;
+}

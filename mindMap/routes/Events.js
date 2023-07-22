@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Event } from "./Event";
 import {
   View,
@@ -27,7 +27,7 @@ const EventList = ({ events, onEventPress }) => {
     <FlatList
       data={events}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.date}
       style={styles.flatList}
     />
   );
@@ -44,79 +44,36 @@ const EventDetails = ({ event }) => {
   );
 };
 
+import { getEventQueue } from "../helper";
+import { onSnapshot } from "firebase/firestore";
+
 export default function App({ navigation }) {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "Workshop: Stress Management Techniques",
-      date: "2023-07-01",
-      description:
-        "Learn effective stress management techniques to improve your overall well-being as a student.",
-    },
-    {
-      id: 2,
-      title: "Yoga and Meditation Session",
-      date: "2023-07-05",
-      description:
-        "Join us for a rejuvenating yoga and meditation session to relax and de-stress.",
-    },
-    {
-      id: 3,
-      title: "Healthy Cooking Class",
-      date: "2023-07-10",
-      description:
-        "Learn how to prepare nutritious and delicious meals on a student budget.",
-    },
-    {
-      id: 4,
-      title: "Group Fitness Session",
-      date: "2023-07-15",
-      description:
-        "Join a fun group fitness session to stay active and improve your physical well-being.",
-    },
-    {
-      id: 5,
-      title: "Art Therapy Workshop",
-      date: "2023-07-20",
-      description:
-        "Explore your creativity and enhance your emotional well-being through art therapy.",
-    },
-    {
-      id: 6,
-      title: "Career Planning Seminar",
-      date: "2023-07-25",
-      description:
-        "Get valuable insights and tips for planning your career path as a student.",
-    },
-    {
-      id: 7,
-      title: "Outdoor Adventure Day",
-      date: "2023-07-30",
-      description:
-        "Join us for an exciting day of outdoor activities to boost your mental and physical well-being.",
-    },
-    {
-      id: 8,
-      title: "Self-Care Workshop",
-      date: "2023-08-05",
-      description:
-        "Learn practical self-care strategies to prioritize your well-being as a student.",
-    },
-    {
-      id: 9,
-      title: "Time Management Seminar",
-      date: "2023-08-10",
-      description:
-        "Enhance your productivity and time management skills to reduce stress and achieve academic success.",
-    },
-    {
-      id: 10,
-      title: "Mindfulness Workshop",
-      date: "2023-08-15",
-      description:
-        "Discover the power of mindfulness and how it can positively impact your mental well-being.",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    let q = getEventQueue();
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
+        if (querySnapshot.empty) {
+          setEvents([]);
+        } else {
+          const newEvents = [];
+          querySnapshot.docs.forEach((doc) => {
+            newEvents.push({ ...doc.data(), itemID: doc.id });
+          });
+          setEvents(newEvents);
+          console.log(events);
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleEventPress = (event) => {
     navigation.getParent().navigate("Event", { item: event });
