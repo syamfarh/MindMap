@@ -96,7 +96,7 @@ export default function App({ route, navigation }) {
         // Prompt the user before leaving the screen
         Alert.alert(
           "Discard changes?",
-          "You have unsaved changes. Are you sure to discard them and leave the screen?",
+          "You have unsaved changes. Are you sure you want to discard them and leave the journal?",
           [
             { text: "Don't leave", style: "cancel", onPress: () => {} },
             {
