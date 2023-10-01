@@ -8,22 +8,29 @@
 ## Features
 
 ### **1. Habit Tracker**
-- (under developement)
-- Allows the user to track their daily habits based on the goals they set.
-- Users can add, remove or edit activities similar to a to-do list or a calender.
-- Statistics available for user to see their daily trends.
-- Utilises a streak achievement feature to encourage sustained progress.
+- Allows the user to track their daily habits and moods based on the goals they set.
+- Statistics available for users to see their daily trends.
 
 ### **2. Personal Journal**
-- (under development)
 - A simple but effective journal tab that allows the user to type out their feelings and thoughts that is bookmarked and stored by day.
-- Can be accessed via the calender as well.
 
-### **3. Self-care Planner**
-- (under developement)
-- Serves as a calender and daily planner for users to segment their time and plan their activities.
-- Links with NUS counselling in case student needs professional help.
-- Informs user of upcoming events in NUS that may interest them based on data from campus labs. (Reads data from a text file that simulates data from campus labs)
+### **3. Self-help outreach page**
+- Links with NUS counselling in case a student needs professional help.
+- Quick and direct access that is placed next to the homepage to invite students to seek help.
 
-## Tech Stack
-- React Native
+
+### **4. Events suggestions**
+- Informs users of upcoming events in NUS that may interest them based on data from campus labs. (Reads data from google firestore that simulates data from campus labs)
+
+## Testing Instructions
+1. Open a source-code editor (e.g Visual Code Studio)
+2. Open terminal on text editor
+3. Change working directory to folder created in step 1
+4. Type in terminal: git clone https://github.com/syamfarh/MindMap.git
+5. Open file directory in source-code editor
+6. In the terminal, type npm install
+7. type npx expo start
+8. Step 9 will cause a QR code to be generated inside the terminal
+9. Using Expo Go app, scan the QR code
+10. Open “Expo Go” app to try out our application
+
